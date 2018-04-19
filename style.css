@@ -1,0 +1,20 @@
+.container{
+    margin-top: 8%;
+}
+button{
+    margin-top: 20px;
+}
+#items{
+    max-height: 200px;
+    overflow-y: auto;
+}
+.list{
+    list-style: none !important;
+}
+ul li.checked {
+    text-decoration: line-through;
+}
+ul li:before{
+    content: none;
+}
+
