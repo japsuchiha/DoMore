@@ -4,14 +4,15 @@ const clear = document.querySelector('#clearTask');
 const collection = document.querySelector('.list');
 loadEventListeners();
 
-function loadEventListeners(){
-    add.addEventListener('click',addItems);
-    clear.addEventListener('click',clearItems);
-    collection.addEventListener('change',checked);
-    document.addEventListener('DOMContentLoaded',getTasks)
+function loadEventListeners() {
+    add.addEventListener('click', addItems);
+    clear.addEventListener('click', clearItems);
+    collection.addEventListener('change', checked);
+    document.addEventListener('DOMContentLoaded', getTasks)
 }
 var i = 1;
-function addItems(e){
+
+function addItems(e) {
     e.preventDefault();
     const inputval = input.value;
     const li = document.createElement('li');
@@ -24,46 +25,60 @@ function addItems(e){
     console.log(li);
     console.log(inputval);
 }
-function clearItems(e){
+
+function clearItems(e) {
     //collection.innerHTML = "";
-    while(collection.firstChild){
+    while (collection.firstChild) {
         collection.firstChild.remove();
     }
     localStorage.clear();
 }
-function checked(e){
-    //console.log(e.target.parentElement.parentElement.parentElement);
+
+function checked(e) {
     e.target.parentElement.parentElement.parentElement.remove();
-    
+    let remove = e.target.parentElement.lastChild.textContent;
+    remove = remove.trim();
+ if(localStorage['tasks'] !== null){
+     let del = [];
+     del = JSON.parse(localStorage.getItem('tasks'));
+         console.log(del);
+     for(let i in del){
+         if(del[i] === remove){
+             del.splice(i,1);
+         }
+     }
+     console.log(del);
+     localStorage.setItem('tasks',JSON.stringify(del));
+ }
+
 }
-function storeTask(task){
+
+function storeTask(task) {
     let tasks;
-    if(localStorage.getItem('tasks')===null){
+    if (localStorage.getItem('tasks') === null) {
         tasks = [];
-    }
-    else{
+    } else {
         tasks = JSON.parse(localStorage.getItem('tasks'));
     }
     tasks.push(task);
-    localStorage.setItem('tasks',JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-function getTasks(){
-     let tasks;
-     var j = 1;
+function getTasks() {
+    let tasks;
+    var j = 1;
     console.log("loaded");
-    if(localStorage.getItem('tasks')===null){
+    if (localStorage.getItem('tasks') === null) {
         tasks = [];
-    }
-    else{
+    } else {
         tasks = JSON.parse(localStorage.getItem('tasks'));
     }
-    tasks.forEach(function(task){
-    console.log("yes");
-    const li = document.createElement('li');
-    collection.appendChild(li);
-    li.innerHTML = `<fieldset class='form-group'><label for='paperChecks${j}'class='paper-check'><input type='checkbox' name='paperChecks' id='paperChecks${j}' value='task1' class="checkbox"><span> ${task}</span></label></fieldset>`;
-    j++;
+    tasks.forEach(function (task) {
+        console.log("yes");
+        const li = document.createElement('li');
+        collection.appendChild(li);
+        li.innerHTML = `<fieldset class='form-group'><label for='paperChecks${j}'class='paper-check'><input type='checkbox' name='paperChecks' id='paperChecks${j}' value='task1' class="checkbox"><span> ${task}</span></label></fieldset>`;
+        j++;
     });
 }
 //function speech(){
