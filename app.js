@@ -81,6 +81,8 @@ function getTasks() {
         j++;
     });
 }
+
+getTasks();
 //function speech(){
 //window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 //
